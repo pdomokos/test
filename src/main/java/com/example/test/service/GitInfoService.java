@@ -20,7 +20,7 @@ public class GitInfoService implements IGitInfoService{
             DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
 
     public String getCommitHash() {
-        return gitCommitId;
+        return gitCommitId+"-"+gitBuildTime;
     }
 
     public Instant getBuildTime() {
