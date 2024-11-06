@@ -10,7 +10,7 @@ import java.time.temporal.TemporalAccessor;
 @Service
 public class GitInfoService implements IGitInfoService{
 
-    @Value("${git.commit.id.abbrev}")
+    @Value("${git.commit.id.full}")
     private String gitCommitId;
 
     @Value("${git.build.time}")

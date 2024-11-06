@@ -108,29 +108,27 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>io.github.git-commit-id</groupId>
-				<artifactId>git-commit-id-maven-plugin</artifactId>
-				<version>5.0.0</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.3.0</version>
 				<executions>
 					<execution>
-						<id>get-the-git-infos</id>
+						<phase>generate-resources</phase>
 						<goals>
-							<goal>revision</goal>
+							<goal>exec</goal>
 						</goals>
-						<phase>initialize</phase>
+						<configuration>
+							<executable>sh</executable>
+							<arguments>
+								<argument>-c</argument>
+								<argument>
+									echo "git.commit.id.full=$(git rev-parse HEAD)" > ${project.build.outputDirectory}/git.properties;
+									echo "git.build.time=$(date)" >> ${project.build.outputDirectory}/git.properties
+								</argument>
+							</arguments>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<generateGitPropertiesFile>true</generateGitPropertiesFile>
-					<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-					<includeOnlyProperties>
-<!--						<includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>-->
-<!--						<includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>-->
-						<includeOnlyProperty>^git.build.time$</includeOnlyProperty>
-						<includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
-					</includeOnlyProperties>
-					<commitIdGenerationMode>full</commitIdGenerationMode>
-				</configuration>
 			</plugin>
 
 			<plugin>
